@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO & GEO Optimization -->
+    <title>OwnHealth | AI Care Coordination & Employee Benefits Concierge</title>
+    <meta name="description"
+        content="OwnHealth is an intelligent, record-aware care concierge combining AI automation with human support. Reduce HR burden, lower absenteeism, and empower patients to navigate healthcare with confidence.">
+    <meta name="keywords"
+        content="Healthcare Concierge, AI Care Coordination, Employee Benefits, Digital Health Binder, Venture Lab, Health Tech, Patient Advocacy">
+    <meta name="author" content="OwnHealth Team">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="OwnHealth - Manage Care with Confidence">
+    <meta property="og:description"
+        content="Stop the benefits administration headache. The AI-driven concierge that solves healthcare fragmentation for employers and individuals.">
+    <meta property="og:image" content="https://ownhealth-website.labs.ai/og-image.jpg">
+    <meta property="og:url" content="https://ownhealth-website.labs.ai">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: { 50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 900: '#312e81' },
+                        teal: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 900: '#134e4a' },
+                        slate: { 850: '#1e293b' } // Darker slate for improved contrast
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            font-feature-settings: "cv11", "ss01";
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* Abstract Background Shapes */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.4;
+            z-index: -1;
+            animation: float 10s ease-in-out infinite;
+        }
+
+        /* Smooth transitions for theme switching */
+        .theme-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+
+<body
+    class="font-sans text-slate-600 antialiased bg-slate-50 selection:bg-indigo-100 selection:text-indigo-900 transition-colors duration-500"
+    id="main-body">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex items-center gap-2 cursor-pointer group" onclick="window.scrollTo(0,0)">
+                    <div id="logo-bg"
+                        class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200/50 transition-all duration-500 group-hover:scale-105">
+                        <i data-lucide="activity" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="font-bold text-2xl text-slate-900 tracking-tight">OwnHealth</span>
+                </div>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <!-- Perspective Toggle (Desktop) -->
+                    <div class="bg-slate-100/80 p-1 rounded-full border border-slate-200 flex items-center">
+                        <button onclick="switchTab('individual')" id="nav-pill-ind"
+                            class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-indigo-700 shadow-sm">
+                            Individuals
+                        </button>
+                        <button onclick="switchTab('employer')" id="nav-pill-emp"
+                            class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-300 text-slate-500 hover:text-slate-900">
+                            Employers
+                        </button>
+                    </div>
+
+                    <a href="#features"
+                        class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Features</a>
+                    <a href="#about"
+                        class="text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">Meet Zoe</a>
+                    <button id="cta-nav"
+                        class="bg-slate-900 text-white px-6 py-2.5 rounded-full font-medium hover:bg-slate-800 transition-all hover:shadow-lg transform hover:-translate-y-0.5 text-sm">
+                        Get Early Access
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button onclick="toggleMobileMenu()" class="text-slate-900 p-2">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute w-full bg-white/95 backdrop-blur-xl border-b border-slate-100 shadow-xl transition-all">
+            <div class="px-4 pt-4 pb-6 space-y-3">
+                <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Select your view</p>
+                <button onclick="switchTab('individual'); toggleMobileMenu()"
+                    class="block w-full text-left px-4 py-3 rounded-xl text-base font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">For
+                    You & Family</button>
+                <button onclick="switchTab('employer'); toggleMobileMenu()"
+                    class="block w-full text-left px-4 py-3 rounded-xl text-base font-bold bg-teal-50 text-teal-700 border border-teal-100">For
+                    Employers</button>
+                <div class="h-px bg-slate-100 my-2"></div>
+                <a href="#features" onclick="toggleMobileMenu()"
+                    class="block px-4 py-2 text-slate-600 font-medium">Features</a>
+                <button class="w-full mt-4 bg-slate-900 text-white px-4 py-3 rounded-xl font-bold">Join
+                    Waitlist</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden transition-colors duration-500"
+        id="hero-section">
+        <!-- Dynamic Backgrounds -->
+        <div id="blob-1"
+            class="blob w-[600px] h-[600px] bg-indigo-200/40 rounded-full top-0 right-0 -mr-20 -mt-20 mix-blend-multiply transition-colors duration-1000">
+        </div>
+        <div id="blob-2"
+            class="blob w-[400px] h-[400px] bg-purple-200/40 rounded-full bottom-0 left-0 -ml-20 -mb-20 mix-blend-multiply transition-colors duration-1000 animation-delay-2000">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+
+                <!-- Status Badge -->
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/60 border border-slate-200 backdrop-blur-sm mb-8 animate-fade-in shadow-sm">
+                    <span class="relative flex h-2 w-2">
+                        <span id="pulse-dot"
+                            class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                        <span id="static-dot" class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                    </span>
+                    <span class="text-xs font-medium text-slate-600">Selected for IE Venture Lab Accelerator</span>
+                </div>
+
+                <!-- Hero Content: Individual -->
+                <div id="hero-individual" class="block">
+                    <h1
+                        class="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 leading-[1.1] animate-slide-up">
+                        Manage your care with <br />
+                        <span
+                            class="gradient-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-[length:200%_auto] animate-gradient">
+                            Confidence & Clarity
+                        </span>
+                    </h1>
+                    <p class="text-xl md:text-2xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed animate-slide-up"
+                        style="animation-delay: 100ms;">
+                        Your intelligent, record-aware care concierge. Combining AI automation with human support to
+                        turn fragmented healthcare into a guided experience.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up"
+                        style="animation-delay: 200ms;">
+                        <button
+                            class="px-8 py-4 rounded-full text-lg font-bold text-white shadow-xl bg-indigo-600 hover:bg-indigo-700 hover:shadow-2xl hover:shadow-indigo-200/50 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                            Download the App <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                        <button
+                            class="px-8 py-4 rounded-full text-lg font-bold text-slate-700 bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2 group">
+                            <span
+                                class="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center mr-1 group-hover:scale-110 transition-transform">
+                                <i data-lucide="bot" class="w-4 h-4 text-indigo-600"></i>
+                            </span>
+                            Meet Zoe AI
+                        </button>
+                    </div>
+                    <!-- Social Proof -->
+                    <p class="mt-8 text-sm text-slate-500 animate-fade-in" style="animation-delay: 400ms;">
+                        Solving the confusion reported by <span class="font-bold text-slate-700">67% of patients</span>
+                        in our national survey.
+                    </p>
+                </div>
+
+                <!-- Hero Content: Employer -->
+                <div id="hero-employer" class="hidden">
+                    <h1
+                        class="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 leading-[1.1] animate-slide-up">
+                        Stop the Benefits <br />
+                        <span class="gradient-text bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-600">
+                            Administration Headache
+                        </span>
+                    </h1>
+                    <p
+                        class="text-xl md:text-2xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed animate-slide-up">
+                        Cut the <span class="font-semibold text-teal-700">10+ hours/week</span> your HR team wastes on
+                        claims. Empower your workforce with an AI concierge that reduces absenteeism and deferred care.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center animate-slide-up">
+                        <button
+                            class="px-8 py-4 rounded-full text-lg font-bold text-white shadow-xl bg-teal-600 hover:bg-teal-700 hover:shadow-2xl hover:shadow-teal-200/50 hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+                            Schedule a Demo <i data-lucide="calendar" class="w-5 h-5"></i>
+                        </button>
+                        <button
+                            class="px-8 py-4 rounded-full text-lg font-bold text-slate-700 bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-all flex items-center gap-2 group">
+                            <i data-lucide="pie-chart"
+                                class="w-5 h-5 text-teal-600 group-hover:rotate-12 transition-transform"></i>
+                            Calculate ROI
+                        </button>
+                    </div>
+                    <!-- Social Proof -->
+                    <p class="mt-8 text-sm text-slate-500 animate-fade-in">
+                        Targeting a <span class="font-bold text-slate-700">15% reduction</span> in administrative
+                        overhead.
+                    </p>
+                </div>
+
+                <!-- Integration Logos -->
+                <div class="mt-20 pt-10 border-t border-slate-200/60">
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">Built on interoperability
+                        standards</p>
+                    <div
+                        class="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                        <div class="flex items-center gap-2 font-bold text-xl text-slate-800">
+                            <div class="w-6 h-6 bg-red-600 rounded"></div> Epic
+                        </div>
+                        <div class="flex items-center gap-2 font-bold text-xl text-slate-800">
+                            <div class="w-6 h-6 bg-blue-600 rounded"></div> Cerner
+                        </div>
+                        <div class="flex items-center gap-2 font-bold text-xl text-slate-800">
+                            <i data-lucide="flame" class="text-orange-500 w-6 h-6"></i> FHIR Ready
+                        </div>
+                        <div class="flex items-center gap-2 font-bold text-xl text-slate-800">
+                            <i data-lucide="shield-check" class="text-slate-600 w-6 h-6"></i> HIPAA Compliant
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Prop / How It Works -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-indigo-600 font-bold tracking-wider text-sm uppercase" id="steps-label">The
+                    Journey</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">From Confusion to Control</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 relative">
+                <!-- Connector Line (Desktop) -->
+                <div
+                    class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-indigo-100 via-indigo-200 to-indigo-100 z-0">
+                </div>
+
+                <!-- Step 1 -->
+                <div class="relative z-10 flex flex-col items-center text-center group">
+                    <div
+                        class="w-24 h-24 bg-indigo-50 rounded-3xl flex items-center justify-center mb-6 shadow-sm border border-indigo-100 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="clipboard-list" class="w-10 h-10 text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">1. Prepare</h3>
+                    <p class="text-slate-500 px-4">Zoe generates a checklist of questions based on your symptoms and
+                        history before you walk in.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 flex flex-col items-center text-center group">
+                    <div
+                        class="w-24 h-24 bg-teal-50 rounded-3xl flex items-center justify-center mb-6 shadow-sm border border-teal-100 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="stethoscope" class="w-10 h-10 text-teal-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">2. The Visit</h3>
+                    <p class="text-slate-500 px-4">Record the visit securely. Zoe transcribes jargon into plain English
+                        you can actually understand.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 flex flex-col items-center text-center group">
+                    <div
+                        class="w-24 h-24 bg-purple-50 rounded-3xl flex items-center justify-center mb-6 shadow-sm border border-purple-100 group-hover:scale-110 transition-transform duration-300">
+                        <i data-lucide="check-circle" class="w-10 h-10 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">3. Action</h3>
+                    <p class="text-slate-500 px-4">Automated follow-ups. "Book It" button for referrals. Bills verified
+                        against your insurance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-slate-50 relative overflow-hidden transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 id="features-title" class="text-3xl md:text-4xl font-bold text-slate-900 mb-4 transition-all">
+                        Why Patients Choose OwnHealth
+                    </h2>
+                    <p class="text-lg text-slate-500 max-w-xl">
+                        We solve the "Bleeding Neck" problems identified in our research.
+                    </p>
+                </div>
+                <!-- Nav Controls for Features -->
+                <div class="hidden md:flex gap-2">
+                    <button class="p-2 rounded-full border border-slate-200 hover:bg-white transition-colors"><i
+                            data-lucide="chevron-left" class="w-5 h-5 text-slate-400"></i></button>
+                    <button class="p-2 rounded-full border border-slate-200 hover:bg-white transition-colors"><i
+                            data-lucide="chevron-right" class="w-5 h-5 text-slate-600"></i></button>
+                </div>
+            </div>
+
+            <!-- Individual Features -->
+            <div id="features-individual" class="grid md:grid-cols-3 gap-8 animate-slide-up">
+                <!-- Card 1 -->
+                <div
+                    class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 hover:-translate-y-2">
+                    <div
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-indigo-600 text-white shadow-lg shadow-indigo-200">
+                        <i data-lucide="brain" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Zoe: Your AI Concierge</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">Translates medical jargon into clear language.
+                        "Zoe, what does this creatinine level mean for my diet?"</p>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 hover:-translate-y-2">
+                    <div
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-teal-500 text-white shadow-lg shadow-teal-200">
+                        <i data-lucide="calendar-check" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">The "Book It" Button</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">Don't wait on hold. Say "I need a dermatologist,"
+                        and we handle scheduling, insurance verification, and prep.</p>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 hover:-translate-y-2">
+                    <div
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-purple-500 text-white shadow-lg shadow-purple-200">
+                        <i data-lucide="folder-lock" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Universal Health Binder</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">A secure, unified digital binder for the whole
+                        family. Share records with any doctor in seconds via QR code.</p>
+                </div>
+            </div>
+
+            <!-- Employer Features -->
+            <div id="features-employer" class="hidden grid md:grid-cols-3 gap-8 animate-slide-up">
+                <!-- Card 1 -->
+                <div
+                    class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 hover:-translate-y-2">
+                    <div
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-teal-600 text-white shadow-lg shadow-teal-200">
+                        <i data-lucide="briefcase" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Reduce HR Burden</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">Eliminate the 10+ hours/week your HR team spends
+                        fielding basic benefits questions. Zoe answers them instantly.</p>
+                </div>
+                <!-- Card 2 -->
+                <div
+                    class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 hover:-translate-y-2">
+                    <div
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-emerald-500 text-white shadow-lg shadow-emerald-200">
+                        <i data-lucide="trending-up" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Lower Absenteeism</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">Streamlined booking means less time off work for
+                        simple appointments and quicker recoveries for your team.</p>
+                </div>
+                <!-- Card 3 -->
+                <div
+                    class="group bg-white p-8 rounded-[2rem] shadow-sm hover:shadow-xl border border-slate-100 transition-all duration-300 hover:-translate-y-2">
+                    <div
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-blue-600 text-white shadow-lg shadow-blue-200">
+                        <i data-lucide="heart-handshake" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Retention & Care</h3>
+                    <p class="text-slate-600 leading-relaxed text-sm">Show employees you care. Offer a benefit that
+                        actually supports them during personal health crises, not just a portal.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Prototype Section -->
+    <section class="py-24 bg-white overflow-hidden" id="prototype">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+
+                <!-- Text Content & Controls -->
+                <div class="order-2 lg:order-1">
+                    <div
+                        class="inline-block px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-700 font-bold text-xs uppercase tracking-wider mb-6 border border-indigo-100">
+                        Live Interactive Demo
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
+                        Experience the <br /> <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">"Magic
+                            Button"</span>
+                    </h2>
+                    <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+                        We asked 200+ adults what they wanted. The answer? A simple way to prepare for visits and book
+                        care without the headache.
+                    </p>
+
+                    <div class="space-y-4">
+                        <button onclick="changeScreen('dashboard')" id="btn-dashboard"
+                            class="w-full text-left p-4 rounded-2xl transition-all border flex items-center gap-5 bg-white border-indigo-200 shadow-lg scale-105 ring-1 ring-indigo-50">
+                            <div class="p-3 rounded-xl bg-indigo-100 text-indigo-600">
+                                <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Smart Dashboard</h4>
+                                <p class="text-sm text-slate-500">Your daily health snapshot and tasks.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="changeScreen('prep')" id="btn-prep"
+                            class="w-full text-left p-4 rounded-2xl transition-all border flex items-center gap-5 bg-transparent border-transparent hover:bg-slate-50 opacity-70 hover:opacity-100">
+                            <div class="p-3 rounded-xl bg-teal-100 text-teal-600">
+                                <i data-lucide="brain-circuit" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Visit Prep (Zoe)</h4>
+                                <p class="text-sm text-slate-500">AI-generated questions for your doctor.</p>
+                            </div>
+                        </button>
+
+                        <button onclick="changeScreen('concierge')" id="btn-concierge"
+                            class="w-full text-left p-4 rounded-2xl transition-all border flex items-center gap-5 bg-transparent border-transparent hover:bg-slate-50 opacity-70 hover:opacity-100">
+                            <div class="p-3 rounded-xl bg-purple-100 text-purple-600">
+                                <i data-lucide="message-square" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 text-lg">Concierge Chat</h4>
+                                <p class="text-sm text-slate-500">Real help for billing and referrals.</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Phone Mockup -->
+                <div class="order-1 lg:order-2 flex justify-center relative">
+                    <!-- Decor behind phone -->
+                    <div
+                        class="absolute inset-0 bg-gradient-to-tr from-indigo-200 to-teal-200 rounded-full blur-[100px] opacity-40">
+                    </div>
+
+                    <div
+                        class="relative w-[340px] h-[680px] bg-slate-900 rounded-[3.5rem] border-8 border-slate-900 shadow-2xl overflow-hidden ring-1 ring-slate-900/5 z-10 transform transition-transform hover:scale-[1.01] duration-500">
+
+                        <!-- Dynamic Island / Notch -->
+                        <div
+                            class="absolute top-0 left-1/2 transform -translate-x-1/2 h-7 w-32 bg-black rounded-b-3xl z-20 flex items-center justify-center gap-2">
+                            <div class="w-1.5 h-1.5 rounded-full bg-slate-800/50"></div>
+                            <div class="w-12 h-1.5 rounded-full bg-slate-800/50"></div>
+                        </div>
+
+                        <!-- Screen Container -->
+                        <div
+                            class="absolute top-0 left-0 w-full h-full bg-slate-50 overflow-y-auto no-scrollbar font-sans">
+
+                            <!-- App Header -->
+                            <div class="bg-white px-6 pt-12 pb-4 shadow-sm z-10 sticky top-0 border-b border-slate-100">
+                                <div class="flex justify-between items-center mb-4">
+                                    <div class="w-8 h-8 rounded-full bg-slate-200 border border-slate-300"></div>
+                                    <div class="font-bold text-slate-900 flex items-center gap-1"><i
+                                            data-lucide="activity" class="w-3 h-3 text-indigo-600"></i> OwnHealth</div>
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center border border-slate-200 relative">
+                                        <i data-lucide="bell" class="w-4 h-4 text-slate-600"></i>
+                                        <div
+                                            class="absolute top-1 right-2 w-2 h-2 bg-red-500 rounded-full border border-white">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-2xl font-bold text-slate-900 leading-tight">Good Morning, <br />Sarah
+                                </div>
+                            </div>
+
+                            <!-- Dashboard Screen -->
+                            <div id="screen-dashboard" class="p-5 space-y-5 animate-fade-in">
+                                <!-- Featured Card -->
+                                <div
+                                    class="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl p-6 text-white shadow-xl shadow-indigo-200">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div>
+                                            <span
+                                                class="bg-white/20 px-2.5 py-1 rounded-lg text-xs font-medium backdrop-blur-md border border-white/10">Today,
+                                                2:00 PM</span>
+                                            <h3 class="font-bold text-xl mt-2">Cardiology Follow-up</h3>
+                                        </div>
+                                        <div
+                                            class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md">
+                                            <i data-lucide="calendar" class="w-5 h-5 text-white"></i>
+                                        </div>
+                                    </div>
+                                    <p class="text-indigo-100 text-sm mb-6 flex items-center gap-2">
+                                        <i data-lucide="map-pin" class="w-3 h-3"></i> Dr. Emily Chen • Suite 400
+                                    </p>
+                                    <button
+                                        class="w-full bg-white text-indigo-600 py-3 rounded-xl font-bold text-sm shadow-sm hover:bg-indigo-50 transition-colors">Start
+                                        Check-in</button>
+                                </div>
+
+                                <!-- Tasks -->
+                                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
+                                    <h4 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                        <i data-lucide="check-square" class="w-4 h-4 text-slate-400"></i> Tasks
+                                    </h4>
+                                    <div class="space-y-3">
+                                        <div
+                                            class="flex items-center gap-3 p-2 hover:bg-slate-50 rounded-lg transition-colors cursor-pointer">
+                                            <div class="w-5 h-5 rounded-md border-2 border-slate-300"></div>
+                                            <span class="text-slate-700 text-sm font-medium">Take Metoprolol
+                                                (50mg)</span>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-2 bg-slate-50 rounded-lg">
+                                            <div
+                                                class="w-5 h-5 rounded-md border-2 border-teal-500 bg-teal-500 flex items-center justify-center">
+                                                <i data-lucide="check" class="text-white w-3 h-3"></i>
+                                            </div>
+                                            <span class="text-slate-400 text-sm line-through">Review Lab Results</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Prep Screen -->
+                            <div id="screen-prep" class="hidden p-5 space-y-4 animate-fade-in">
+                                <div class="bg-teal-50 border border-teal-100 p-5 rounded-3xl">
+                                    <h4 class="font-bold text-teal-900 flex items-center gap-2 mb-2">
+                                        <i data-lucide="sparkles" class="w-4 h-4 text-teal-600"></i> Zoe Suggests
+                                    </h4>
+                                    <p class="text-sm text-teal-700 leading-relaxed">
+                                        Based on your lab work from Tuesday, here are 3 questions you should ask Dr.
+                                        Chen.
+                                    </p>
+                                </div>
+
+                                <div class="space-y-3">
+                                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex gap-3">
+                                        <div
+                                            class="mt-1 w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center flex-shrink-0 text-indigo-600 font-bold text-xs">
+                                            1</div>
+                                        <p class="text-slate-700 text-sm font-medium">My potassium levels were slightly
+                                            low. Should I adjust my diet?</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex gap-3">
+                                        <div
+                                            class="mt-1 w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center flex-shrink-0 text-indigo-600 font-bold text-xs">
+                                            2</div>
+                                        <p class="text-slate-700 text-sm font-medium">Does my new medication interact
+                                            with Ibuprofen?</p>
+                                    </div>
+                                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex gap-3">
+                                        <div
+                                            class="mt-1 w-6 h-6 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center flex-shrink-0 text-indigo-600 font-bold text-xs">
+                                            3</div>
+                                        <p class="text-slate-700 text-sm font-medium">When can I restart my
+                                            high-intensity exercise routine?</p>
+                                    </div>
+                                </div>
+                                <button
+                                    class="w-full bg-teal-600 text-white py-3 rounded-xl font-bold text-sm shadow-md mt-4">Save
+                                    to Visit Notes</button>
+                            </div>
+
+                            <!-- Concierge Screen -->
+                            <div id="screen-concierge" class="hidden p-4 flex flex-col h-[480px] animate-fade-in">
+                                <div class="flex-1 space-y-4 overflow-y-auto">
+                                    <div class="text-center text-xs text-slate-400 my-4">Today, 9:41 AM</div>
+
+                                    <div class="flex gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                                            Z</div>
+                                        <div
+                                            class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 max-w-[80%]">
+                                            <p class="text-sm text-slate-700">Hi Sarah! I noticed a bill from Quest
+                                                Diagnostics for $150. Would you like me to verify if this was covered by
+                                                your Aetna plan?</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex gap-3 flex-row-reverse">
+                                        <div
+                                            class="bg-indigo-600 p-3 rounded-2xl rounded-tr-none shadow-sm max-w-[80%] text-white">
+                                            <p class="text-sm">Yes, please. I thought my annual physical labs were fully
+                                                covered.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-md">
+                                            Z</div>
+                                        <div
+                                            class="bg-white p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 max-w-[80%]">
+                                            <p class="text-sm text-slate-700">Checking now... </p>
+                                            <div
+                                                class="mt-2 flex items-center gap-2 text-xs text-slate-500 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                                <i data-lucide="loader-2"
+                                                    class="w-3 h-3 animate-spin text-indigo-500"></i> Interfacing with
+                                                Aetna Portal via API...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Input Area -->
+                                <div class="mt-auto pt-4 border-t border-slate-100">
+                                    <div
+                                        class="bg-slate-100 rounded-full h-10 flex items-center px-4 text-slate-400 text-sm">
+                                        Type a message...</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Home Indicator -->
+                        <div
+                            class="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-slate-800 rounded-full z-30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Survey Section (CTA) -->
+    <section class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <!-- Abstract shapes -->
+        <div
+            class="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/30 rounded-full -mr-32 -mt-32 blur-[100px]">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-teal-600/20 rounded-full -ml-48 -mb-48 blur-[100px]">
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 relative text-center z-10">
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-8 tracking-tight">Help us shape the future of care.</h2>
+            <p class="text-slate-300 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+                We are currently selecting pilot partners for our <span class="text-white font-bold">Venture Lab</span>
+                cohort.
+                Tell us about your biggest healthcare friction point.
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                <button
+                    class="bg-white/10 backdrop-blur-lg border border-white/10 p-8 rounded-3xl hover:bg-white/20 transition-all text-left group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-indigo-500 rounded-lg"><i data-lucide="building-2"
+                                class="w-6 h-6 text-white"></i></div>
+                        <h3 class="font-bold text-xl">For Employers</h3>
+                    </div>
+                    <p class="text-slate-300 text-sm mb-4">"My HR team spends <span class="text-white font-bold">10+
+                            hours a week</span> on claims issues."</p>
+                    <span
+                        class="text-indigo-300 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">Take
+                        Survey <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                </button>
+
+                <button
+                    class="bg-white/10 backdrop-blur-lg border border-white/10 p-8 rounded-3xl hover:bg-white/20 transition-all text-left group hover:-translate-y-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="p-2 bg-teal-500 rounded-lg"><i data-lucide="user" class="w-6 h-6 text-white"></i>
+                        </div>
+                        <h3 class="font-bold text-xl">For Patients</h3>
+                    </div>
+                    <p class="text-slate-300 text-sm mb-4">"I leave appointments wishing I had asked better questions."
+                    </p>
+                    <span
+                        class="text-teal-300 text-sm font-bold flex items-center gap-1 group-hover:gap-2 transition-all">Take
+                        Survey <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                </button>
+            </div>
+
+            <p class="mt-10 text-xs text-slate-500 font-medium tracking-wide uppercase">
+                Takes less than 2 minutes • Feedback influences roadmap
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 pt-10 pb-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <!-- Brand -->
+                <div class="flex items-center gap-2">
+                    <div
+                        class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-lg flex items-center justify-center">
+                        <i data-lucide="activity" class="text-white w-5 h-5"></i>
+                    </div>
+                    <span class="font-bold text-xl text-slate-900">OwnHealth</span>
+                </div>
+
+                <!-- Tagline -->
+                <p class="text-slate-500 text-sm hidden md:block">
+                    Empowering patients and streamlining care.
+                </p>
+            </div>
+
+            <div class="border-t border-slate-200 mt-8 pt-8 flex justify-between items-center">
+                <p class="text-xs text-slate-400 font-medium">&copy; 2025 OwnHealth. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // --- Navigation Logic ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- Tab Logic (Individual vs Employer) ---
+        function switchTab(tab) {
+            // Elements to style
+            const navPillInd = document.getElementById('nav-pill-ind');
+            const navPillEmp = document.getElementById('nav-pill-emp');
+
+            const logoBg = document.getElementById('logo-bg');
+            const ctaNav = document.getElementById('cta-nav');
+
+            const heroInd = document.getElementById('hero-individual');
+            const heroEmp = document.getElementById('hero-employer');
+
+            const featInd = document.getElementById('features-individual');
+            const featEmp = document.getElementById('features-employer');
+
+            const featTitle = document.getElementById('features-title');
+
+            const blob1 = document.getElementById('blob-1');
+            const blob2 = document.getElementById('blob-2');
+
+            if (tab === 'individual') {
+                // Style Nav Pills
+                navPillInd.classList.add('bg-white', 'text-indigo-700', 'shadow-sm');
+                navPillInd.classList.remove('text-slate-500', 'hover:text-slate-900');
+
+                navPillEmp.classList.remove('bg-white', 'text-teal-700', 'shadow-sm');
+                navPillEmp.classList.add('text-slate-500', 'hover:text-slate-900');
+
+                // Style Colors (Indigo Theme)
+                logoBg.classList.remove('from-teal-600', 'to-emerald-500', 'shadow-teal-200/50');
+                logoBg.classList.add('from-indigo-600', 'to-indigo-500', 'shadow-indigo-200/50');
+
+                ctaNav.classList.remove('hover:bg-teal-800');
+                ctaNav.classList.add('hover:bg-slate-800'); // Keep standard or specific
+
+                // Background Blobs
+                blob1.classList.remove('bg-teal-200/40');
+                blob1.classList.add('bg-indigo-200/40');
+
+                blob2.classList.remove('bg-emerald-200/40');
+                blob2.classList.add('bg-purple-200/40');
+
+                // Show Content
+                heroInd.classList.remove('hidden');
+                heroEmp.classList.add('hidden');
+
+                featInd.classList.remove('hidden');
+                featEmp.classList.add('hidden');
+
+                featTitle.innerText = "Why Patients Choose OwnHealth";
+            } else {
+                // Style Nav Pills
+                navPillInd.classList.remove('bg-white', 'text-indigo-700', 'shadow-sm');
+                navPillInd.classList.add('text-slate-500', 'hover:text-slate-900');
+
+                navPillEmp.classList.add('bg-white', 'text-teal-700', 'shadow-sm');
+                navPillEmp.classList.remove('text-slate-500', 'hover:text-slate-900');
+
+                // Style Colors (Teal Theme)
+                logoBg.classList.remove('from-indigo-600', 'to-indigo-500', 'shadow-indigo-200/50');
+                logoBg.classList.add('from-teal-600', 'to-emerald-500', 'shadow-teal-200/50');
+
+                // Background Blobs
+                blob1.classList.remove('bg-indigo-200/40');
+                blob1.classList.add('bg-teal-200/40');
+
+                blob2.classList.remove('bg-purple-200/40');
+                blob2.classList.add('bg-emerald-200/40');
+
+                // Show Content
+                heroInd.classList.add('hidden');
+                heroEmp.classList.remove('hidden');
+
+                featInd.classList.add('hidden');
+                featEmp.classList.remove('hidden');
+
+                featTitle.innerText = "Why Employers Trust OwnHealth";
+            }
+        }
+
+        // --- Prototype Logic (Phone Screen Switcher) ---
+        function changeScreen(screenName) {
+            // Buttons
+            const btnDash = document.getElementById('btn-dashboard');
+            const btnPrep = document.getElementById('btn-prep');
+            const btnConcierge = document.getElementById('btn-concierge');
+
+            // Screens
+            const screenDash = document.getElementById('screen-dashboard');
+            const screenPrep = document.getElementById('screen-prep');
+            const screenConcierge = document.getElementById('screen-concierge');
+
+            // Reset Buttons
+            const resetBtn = (btn) => {
+                btn.className = "w-full text-left p-4 rounded-2xl transition-all border flex items-center gap-5 bg-transparent border-transparent hover:bg-slate-50 opacity-70 hover:opacity-100";
+            };
+            resetBtn(btnDash);
+            resetBtn(btnPrep);
+            resetBtn(btnConcierge);
+
+            // Hide all screens
+            screenDash.classList.add('hidden');
+            screenPrep.classList.add('hidden');
+            screenConcierge.classList.add('hidden');
+
+            // Activate specific
+            if (screenName === 'dashboard') {
+                btnDash.className = "w-full text-left p-4 rounded-2xl transition-all border flex items-center gap-5 bg-white border-indigo-200 shadow-lg scale-105 ring-1 ring-indigo-50 opacity-100";
+                screenDash.classList.remove('hidden');
+            } else if (screenName === 'prep') {
+                btnPrep.className = "w-full text-left p-4 rounded-2xl transition-all border flex items-center gap-5 bg-white border-teal-200 shadow-lg scale-105 ring-1 ring-teal-50 opacity-100";
+                screenPrep.classList.remove('hidden');
+            } else if (screenName === 'concierge') {
+                btnConcierge.className = "w-full text-left p-4 rounded-2xl transition-all border flex items-center gap-5 bg-white border-purple-200 shadow-lg scale-105 ring-1 ring-purple-50 opacity-100";
+                screenConcierge.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+
+</html>
